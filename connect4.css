@@ -8,11 +8,24 @@
 
 /* pieces are div within game table cells: draw as colored circles */
 
+td {
+  position: relative;
+}
+
 .piece {
   margin: 5px;
   width: 80%;
   height: 80%;
   border-radius: 50%;
+  position: absolute;
+  animation-name: fall;
+  animation-duration: 1s;
+  top: 0;
+}
+
+@keyframes fall {
+  from {top: -335px;}
+  to {top: 0;}
 }
 
 .piece.p1 {
@@ -32,3 +45,5 @@
 #column-top td:hover {
   background-color: gold;
 }
+
+
