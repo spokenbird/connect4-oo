@@ -9,9 +9,16 @@
 
 class Player {
 
-  constructor(color) {
+  constructor(color, num) {
     this.color = color;
+    this.num = num
   }
+
+  toString() {
+    return `p${this.num}`;
+  }
+
+
 }
 
 class Game {
@@ -19,9 +26,11 @@ class Game {
   constructor(HEIGHT, WIDTH) {
     this.HEIGHT = HEIGHT;
     this.WIDTH = WIDTH;
-    this.currPlayer = 1;
+    this.currPlayer = undefined;
     this.board = this.makeBoard();
     this.startButton();
+    this.player1 = null;
+    this.player2 = null;
   }
 
   makeBoard() {
@@ -43,7 +52,11 @@ class Game {
   newGame() {
    const htmlBoard = document.getElementById('board');
    htmlBoard.innerText = "";
+   this.board = this.makeBoard();
    this.makeHtmlBoard();
+   this.player1 = new Player('red', 1);
+   this.player2 = new Player('blue', 2);
+   this.currPlayer = this.player1;
   }
  
 
@@ -90,7 +103,7 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
-    piece.classList.add(`p${this.currPlayer}`);
+    piece.classList.add(`${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
   
     const spot = document.getElementById(`${y}-${x}`);
@@ -128,7 +141,8 @@ class Game {
     }
       
     // switch players
-    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+    
+    this.currPlayer = this.currPlayer === this.player1 ? this.player2 : this.player1;
   }
 
   checkForWin() {
